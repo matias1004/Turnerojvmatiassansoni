@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Turnero · Sansoni</title>
+  <link rel="stylesheet" href="./css/styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <h1>Turnero</h1>
+    <p class="subtitle">
+      Webapp para gestionar turnos. Crea, edita, cancela, marca como completado y filtra.
+      Los datos se guardan en <strong>LocalStorage</strong>.
+    </p>
+  </header>
+
+  <main class="container">
+    <!-- Panel de acciones -->
+    <section class="panel">
+      <div class="panel__group">
+        <button id="btnExport" class="btn btn--ghost">📤 Exportar JSON</button>
+        <label class="btn btn--ghost">
+          📥 Importar JSON
+          <input id="inputImport" type="file" accept="application/json" hidden />
+        </label>
+        <button id="btnClearAll" class="btn btn--danger">🗑️ Borrar todo</button>
+      </div>
+      <div id="toast" class="toast" aria-live="polite"></div>
+    </section>
+
+    <!-- Formulario de carga/edición -->
+    <section class="card">
+      <h2 id="formTitle">Nuevo turno</h2>
+      <form id="turnoForm" autocomplete="off">
+        <input type="hidden" id="turnoId" />
+        <div class="grid">
+          <div class="field">
+            <label for="nombre">Nombre y apellido<span class="req">*</span></label>
+            <input id="nombre" type="text" placeholder="Ej: Juan Pérez" required />
+          </div>
+          <div class="field">
+            <label for="telefono">Teléfono<span class="req">*</span></label>
+            <input id="telefono" type="tel" placeholder="Ej: 11-1234-5678" required />
+          </div>
+          <div class="field">
+            <label for="servicio">Servicio<span class="req">*</span></label>
+            <select id="servicio" required>
+              <option value="">Seleccioná…</option>
+              <option>Corte</option>
+              <option>Color</option>
+              <option>Manicura</option>
+              <option>Depilación</option>
+              <option>Consulta</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="fecha">Fecha<span class="req">*</span></label>
+            <input id="fecha" type="date" required />
+          </div>
+          <div class="field">
+            <label for="hora">Hora<span class="req">*</span></label>
+            <input id="hora" type="time" required />
+          </div>
+          <div class="field field--full">
+            <label for="notas">Notas</label>
+            <textarea id="notas" rows="2" placeholder="Observaciones…"></textarea>
+          </div>
+        </div>
+        <div class="actions">
+          <button type="submit" class="btn" id="btnSubmit">➕ Agendar</button>
+          <button type="button" class="btn btn--ghost" id="btnReset">↺ Limpiar</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Filtros -->
+    <section class="card">
+      <h2>Buscar / Filtrar</h2>
+      <div class="grid grid--filters">
+        <div class="field">
+          <label for="q">Buscar por nombre o teléfono</label>
+          <input id="q" type="search" placeholder="Ej: Ana / 11-55..." />
+        </div>
+        <div class="field">
+          <label for="fFecha">Fecha</label>
+          <input id="fFecha" type="date" />
+        </div>
+        <div class="field">
+          <label for="fEstado">Estado</label>
+          <select id="fEstado">
+            <option value="">Todos</option>
+            <option value="pendiente">Pendiente</option>
+            <option value="completado">Completado</option>
+            <option value="cancelado">Cancelado</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- Estadísticas -->
+    <section class="stats">
+      <div class="stat"><span id="statTotal">0</span><small>Total</small></div>
+      <div class="stat"><span id="statPend">0</span><small>Pendientes</small></div>
+      <div class="stat"><span id="statComp">0</span><small>Completados</small></div>
+      <div class="stat"><span id="statCanc">0</span><small>Cancelados</small></div>
+    </section>
+
+    <!-- Listado -->
+    <section class="card">
+      <h2>Turnos</h2>
+      <div id="emptyState" class="empty">Sin turnos aún. Cargá el primero 👇</div>
+      <ul id="turnoList" class="list"></ul>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <small>Entregable 2 · Sansoni — DOM + Eventos + LocalStorage</small>
+  </footer>
+
+  <script src="./js/app.js" defer></script>
+</body>
+</html>
